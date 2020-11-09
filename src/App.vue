@@ -164,7 +164,7 @@ export default Vue.extend({
     getAllPlants: function() {
       return axios
         .get(this.URI)
-        .then((response: AxiosResponse<plants[]>) => {
+        .then((response: AxiosResponse) => {
           this.planter = response.data;
         })
         .catch((error: AxiosError) => {
@@ -174,7 +174,7 @@ export default Vue.extend({
     getPlantById: function(id: number) {
       return axios
         .get("http://restfulplanteshop.azurewebsites.net/api/planter/" + id)
-        .then((response: AxiosResponse<plants[]>) => {
+        .then((response: AxiosResponse) => {
           this.plantById = response.data;
         })
         .catch((error: AxiosError) => {
@@ -186,7 +186,7 @@ export default Vue.extend({
         .get(
           "http://restfulplanteshop.azurewebsites.net/api/planter/type/" + type
         )
-        .then((response: AxiosResponse<plants[]>) => {
+        .then((response) => {
           this.plantTypes = response.data;
         });
     },
