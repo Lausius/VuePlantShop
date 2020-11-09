@@ -3,6 +3,7 @@
     <div class="jumbotron">
       <h1 class="text-center">Planteshop</h1>
     </div>
+    <AddPlant @add="postPlant" />
     <div class="card card-primary mb-5">
       <div class="card-header">GET All Plants</div>
       <div class="card-body btn-group">
@@ -97,68 +98,29 @@
         </tbody>
       </table>
     </div>
-    <div class="card card-primary mb-5">
-      <div class="card-header">Add Plant To Shop</div>
-      <form class="form" id="postForm">
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Input Plant Name ..."
-            v-model="newPlantName"
-          />
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Input Plant Type ..."
-            v-model="newPlantType"
-          />
-          <input
-            type="number"
-            class="form-control"
-            placeholder="Input Max Height ..."
-            v-model.number="newMaxHeight"
-          />
-          <input
-            type="number"
-            class="form-control"
-            placeholder="Input Price ..."
-            v-model.number="newPrice"
-          />
-        </div>
-      </form>
-      <br />
-      <div class="card-body btn-group">
-        <button class="btn btn-primary" id="postBtn" @click="postPlant()">
-          Send
-        </button>
-      </div>
-      <div class="card-body" id="postContent"></div>
-    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import plants from "./plante";
-import { json2table } from "./json2table";
+import plants from "./IPlants";
+import AddPlant from "./components/AddPlant.vue";
 
 export default Vue.extend({
   name: "App",
   data() {
     return {
-      planter: [],
       inputId: Number,
+      planter: [],
       plantById: [],
       plantTypes: [],
       inputType: "",
-      URI: "http://restfulplanteshop.azurewebsites.net/api/planter",
-      newPlantName: "",
-      newPlantType: "",
-      newMaxHeight: Number,
-      newPrice: Number
+      URI: "http://restfulplanteshop.azurewebsites.net/api/planter"
     };
+  },
+  components: {
+    AddPlant
   },
   methods: {
     getAllPlants: function() {
@@ -186,24 +148,17 @@ export default Vue.extend({
         .get(
           "http://restfulplanteshop.azurewebsites.net/api/planter/type/" + type
         )
-        .then((response) => {
+        .then(response => {
           this.plantTypes = response.data;
         });
     },
-    postPlant: function() {
-      const newPlant = {
-        planteNavn: this.newPlantName,
-        planteType: this.newPlantType,
-        maksHoejde: this.newMaxHeight,
-        price: this.newPrice
-      };
-      console.log(newPlant);
+    postPlant: function(value) {
+      console.log(value);
 
-      return axios.post(this.URI, newPlant).catch((error: AxiosError) => {
+      return axios.post(this.URI, value).catch((error: AxiosError) => {
         console.log(error);
       });
     }
   }
 });
 </script>
-
