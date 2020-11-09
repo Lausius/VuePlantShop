@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="jumbotron">
-      <h1 class="text-center">Planteshop</h1>
+      <h1 class="text-center display-4">Planteshop</h1>
     </div>
     <AddPlant @add="postPlant" />
     <GetAllPlants :planter="planter" @get="getAllPlants" />
