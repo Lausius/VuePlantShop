@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'vueplantshop'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_28c3e9c68cb4410784af297b44d91840 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_8ccff23b71f548b9a711cecac93a797d }}
         package: ${{env.DOTNET_ROOT}}/myapp 
