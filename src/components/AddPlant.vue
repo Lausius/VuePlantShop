@@ -80,11 +80,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
-  name: "AddPlant",
+<script>
+export default {
+   name: "AddPlant",
   data() {
     return {
       formData: [],
@@ -104,7 +102,7 @@ export default Vue.extend({
       this.hidepanel = true;
     }
   }
-});
+}
 </script>
 
 <style >

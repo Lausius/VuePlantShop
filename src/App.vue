@@ -67,7 +67,7 @@ export default Vue.extend({
           this.plantTypes = response.data;
         });
     },
-    postPlant: function(value) {
+    postPlant: function(value: object) {
       console.log(value);
 
       return axios.post(this.URI, value).catch((error: AxiosError) => {
