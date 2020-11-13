@@ -6,7 +6,15 @@
         Get All Plants
       </button>
     </div>
-    <table class="table table-striped" v-if="planter.length">
+    <div
+      v-if="!planter.length && isLoading"
+      class="d-flex justify-content-center mb-2"
+    >
+      <div class="spinner-border text-info" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <table class="table table-striped" v-else-if="planter.length">
       <thead>
         <tr>
           <th>ID</th>
@@ -23,7 +31,9 @@
           <td>{{ plante.planteType }}</td>
           <td>{{ plante.maksHoejde }}</td>
           <td>{{ plante.price }}</td>
-          <button class="btn btn-danger" @click="$emit('remove', plante)">Remove</button>
+          <button class="btn btn-danger" @click="$emit('remove', plante)">
+            Remove
+          </button>
         </tr>
       </tbody>
     </table>
@@ -33,7 +43,7 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-    name: "GetAllPlants",
-    props: ["planter"]
+  name: "GetAllPlants",
+  props: ["planter", "isLoading"],
 });
 </script>

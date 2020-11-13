@@ -6,8 +6,10 @@
     <AddPlant @add="postPlant" />
     <GetAllPlants
       :planter="planter"
+      :isLoading="isLoading"
       @get="getAllPlants"
       @remove="deletePlant"
+
     />
     <GetPlantById :plantById="plantById" @getid="getPlantById" />
     <GetPlantByType :plantTypes="plantTypes" @gettype="getPlantByType" />
@@ -33,6 +35,7 @@ export default Vue.extend({
       plantById: "",
       plantTypes: [],
       inputType: "",
+      isLoading: false,
       URI: "http://restfulplanteshop.azurewebsites.net/api/planter",
     };
   },
@@ -43,11 +46,13 @@ export default Vue.extend({
     GetPlantByType,
   },
   methods: {
-    getAllPlants: function () {
-      return axios
+    getAllPlants: async function () {
+      this.isLoading = true;
+      return await axios
         .get(this.URI)
         .then((response: AxiosResponse) => {
           this.planter = response.data;
+          this.isLoading = false;
         })
         .catch((error: AxiosError) => {
           console.log(error);
@@ -68,7 +73,7 @@ export default Vue.extend({
         .get(
           "http://restfulplanteshop.azurewebsites.net/api/planter/type/" + type
         )
-        .then((response) => {
+        .then((response: AxiosResponse) => {
           this.plantTypes = response.data;
         });
     },
