@@ -4,10 +4,13 @@
       <h1 class="text-center display-4">Planteshop</h1>
     </div>
     <AddPlant @add="postPlant" />
-    <GetAllPlants :planter="planter" @get="getAllPlants" />
+    <GetAllPlants
+      :planter="planter"
+      @get="getAllPlants"
+      @remove="deletePlant"
+    />
     <GetPlantById :plantById="plantById" @getid="getPlantById" />
-    <GetPlantByType :plantTypes="plantTypes" @gettype="getPlantByType"/>
-   
+    <GetPlantByType :plantTypes="plantTypes" @gettype="getPlantByType" />
   </div>
 </template>
 
@@ -19,6 +22,8 @@ import AddPlant from "./components/AddPlant.vue";
 import GetAllPlants from "./components/GetAllPlants.vue";
 import GetPlantById from "./components/GetPlantById.vue";
 import GetPlantByType from "./components/GetPlantByType.vue";
+import _ from "lodash";
+import IPlants from "./IPlants";
 
 export default Vue.extend({
   name: "App",
@@ -28,17 +33,17 @@ export default Vue.extend({
       plantById: "",
       plantTypes: [],
       inputType: "",
-      URI: "http://restfulplanteshop.azurewebsites.net/api/planter"
+      URI: "http://restfulplanteshop.azurewebsites.net/api/planter",
     };
   },
   components: {
     AddPlant,
     GetAllPlants,
     GetPlantById,
-    GetPlantByType
+    GetPlantByType,
   },
   methods: {
-    getAllPlants: function() {
+    getAllPlants: function () {
       return axios
         .get(this.URI)
         .then((response: AxiosResponse) => {
@@ -48,7 +53,7 @@ export default Vue.extend({
           console.log(error);
         });
     },
-    getPlantById: function(id: number) {
+    getPlantById: function (id: number) {
       return axios
         .get("http://restfulplanteshop.azurewebsites.net/api/planter/" + id)
         .then((response: AxiosResponse) => {
@@ -58,22 +63,31 @@ export default Vue.extend({
           console.log(error);
         });
     },
-    getPlantByType: function(type: string) {
+    getPlantByType: function (type: string) {
       return axios
         .get(
           "http://restfulplanteshop.azurewebsites.net/api/planter/type/" + type
         )
-        .then(response => {
+        .then((response) => {
           this.plantTypes = response.data;
         });
     },
-    postPlant: function(value: object) {
+    postPlant: async function (value: IPlants) {
       console.log(value);
 
-      return axios.post(this.URI, value).catch((error: AxiosError) => {
+      return await axios.post(this.URI, value).catch((error: AxiosError) => {
         console.log(error);
       });
-    }
-  }
+    },
+    deletePlant: function (plante: IPlants) {
+      console.log(plante);
+      this.planter = _.without(this.planter, plante);
+      return axios
+        .delete(this.URI + "/" + plante.planteId)
+        .catch((error: AxiosError) => {
+          console.log(error);
+        });
+    },
+  },
 });
 </script>

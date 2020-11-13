@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.165",
     "axios": "^0.21.0",
     "vue": "^2.6.11"
   },

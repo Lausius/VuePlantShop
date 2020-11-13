@@ -23,6 +23,7 @@
           <td>{{ plante.planteType }}</td>
           <td>{{ plante.maksHoejde }}</td>
           <td>{{ plante.price }}</td>
+          <button class="btn btn-danger" @click="$emit('remove', plante)">Remove</button>
         </tr>
       </tbody>
     </table>
